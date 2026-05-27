@@ -8,7 +8,7 @@ const logger = require("../helper/logger");
 async function main() {
   const command = process.argv[2] || "sync-cdr";
 
-  // ─── OPTION 1: CONNECTION TESTING ──────────────────────────────────────────
+  // ─── CONNECTION TESTING ──────────────────────────────────────────
   if (command === "check-connections") {
     const runtimeConfig = readRuntimeConfig();
     const results = await testConnections(runtimeConfig);
@@ -21,7 +21,7 @@ async function main() {
     return;
   }
 
-  // ─── OPTION 2: DATA SYNC ENGINE ──────────────────────────────────────────
+  // ─── DATA SYNC ENGINE ──────────────────────────────────────────
   if (command === "sync-cdr") {
     const runtimeConfig = readRuntimeConfig();
 
@@ -55,7 +55,7 @@ async function main() {
     return;
   }
 
-  // ─── OPTION 3: DATA RECONCILIATION AUDITOR ──────────────────────────────────────────
+  // ─── DATA RECONCILIATION AUDITOR ──────────────────────────────────────────
   if (command === "cdr-reconcile") {
     const runtimeConfig = readRuntimeConfig();
     const hourlyIntervalMs = 60 * 60 * 1000;
@@ -76,7 +76,7 @@ async function main() {
     return;
   }
 
-  // ─── OPTION 4: SFTP FILE TRANSMISSION ENGINE ──────────────────────────────────────────
+  // ─── FTP/SFTP FILE TRANSMISSION ENGINE ──────────────────────────────────────────
   if (command === "file-move") {
     const runtimeConfig = readRuntimeConfig();
     const intervalSeconds = runtimeConfig.fileTransfer?.intervalSeconds || 600;
