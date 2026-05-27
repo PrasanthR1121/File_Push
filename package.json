@@ -1,0 +1,28 @@
+{
+  "name": "mysql-oracle-cdr-sync",
+  "version": "1.0.0",
+  "description": "Sync CDR data from MySQL to Oracle in controlled batches.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "check-connections": "node src/index.js check-connections",
+    "sync-cdr": "node src/index.js sync-cdr",
+    "watch-cdr": "node src/index.js watch-cdr",
+    "check": "node --check src/index.js && node --check src/runtimeConfig.js && node --check src/cdrSync.js && node --check src/oracle.js && node --check src/mysql.js && node --check src/connectionCheck.js"
+  },
+  "keywords": [
+    "mysql",
+    "cdr",
+    "oracle",
+    "sync"
+  ],
+  "author": "Prasanth",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "basic-ftp": "^6.0.1",
+    "dotenv": "^17.4.2",
+    "mysql2": "^3.12.0",
+    "oracledb": "^6.7.1",
+    "ssh2-sftp-client": "^12.1.1"
+  }
+}
