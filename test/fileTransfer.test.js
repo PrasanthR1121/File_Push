@@ -10,7 +10,6 @@ async function runFileTransfer(runtimeConfig) {
     try {
         connection = await getOracleConnection(runtimeConfig.oracleDb, runtimeConfig.oracleClient);
 
-        // 1. Call procedure to get file stream cursor
         const result = await connection.execute(
             `BEGIN 
                 Bsp_Sftp_Get_Files_to_Transfer_Prc(:flag, :host, :port, :user, :pass, :cursor); 
@@ -35,7 +34,6 @@ async function runFileTransfer(runtimeConfig) {
         const resultSet = result.outBinds.cursor;
         let row;
 
-        // 2. Process each file row inside the cursor sequentially
         while ((row = await resultSet.getRow())) {
             const [fileId, sourcePath, destPath, backupPath] = row;
             const fileName = path.basename(sourcePath);
@@ -57,12 +55,10 @@ async function runFileTransfer(runtimeConfig) {
                 }
                 const localMockDestPath = path.join(mockRemoteDir, fileName);
 
-                // Copy the file locally to simulate the FTP/SFTP transfer flight
                 fs.copyFileSync(sourcePath, localMockDestPath);
                 logger.info(`[MOCK] Copied ${fileName} locally to mock destination directory.`);
                 // ──────────────────────────────────────────────────────────────────────
 
-                // Step B: Calculate execution date and build date-wise subfolder path
                 let finalBackupPath = backupPath;
 
                 if (backupPath.endsWith("\\") || backupPath.endsWith("/") || !path.extname(backupPath)) {
@@ -74,10 +70,8 @@ async function runFileTransfer(runtimeConfig) {
                     fs.mkdirSync(backupDir, { recursive: true });
                 }
 
-                // Step C: Move local file directly to its specified backup destination folder
                 fs.renameSync(sourcePath, finalBackupPath);
 
-                // Step D: Report successful delivery status back to Oracle (Status: 1)
                 await updateStatus(connection, fileId, 1);
                 logger.info(`[FileTransfer] File ID ${fileId} successfully processed and moved to backup: ${dateFolder}/${fileName}`);
 
