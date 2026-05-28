@@ -1,6 +1,6 @@
 # MySQL to Oracle CDR Sync
 
-Basic Node.js service for moving CDR records from MySQL to Oracle in batches, Also pushes files to remote server using FTP.
+Basic Node.js service for live syncing data from MySQL to Oracle in batches with reconciliation mechanism and generates reports then pushes reports to the remote server using FTP/SFTP.
 
 ## What It Does
 
@@ -49,6 +49,7 @@ Development
 $env:APP_ENV="dev"
 npx pm2 start src/index.js --name "sync-cdr" -- sync-cdr
 npx pm2 start src/index.js --name "cdr-reconcile" -- cdr-reconcile
+npx pm2 start src/index.js --name "cdr-report" -- file-move
 npx pm2 start src/index.js --name "file-move" -- file-move
 
 or
