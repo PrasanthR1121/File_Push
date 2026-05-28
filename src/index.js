@@ -76,6 +76,27 @@ async function main() {
     return;
   }
 
+  // ─── CDR REPORT GENERATION ──────────────────────────────────────────
+  if (command === "cdr-reports") {
+    const runtimeConfig = readRuntimeConfig();
+    const intervalMs = (runtimeConfig.report.pollIntervalMinutes || 10) * 60 * 1000;
+
+    logger.info(`[${runtimeConfig.envName}] Report generator started. Interval: ${runtimeConfig.report.pollIntervalMinutes}m`);
+
+    const runReport = async () => {
+      try {
+        await runReportGenerator(runtimeConfig);
+      } catch (error) {
+        logger.error(`[${runtimeConfig.envName}] Report error:`, error.message);
+      } finally {
+        setTimeout(runReport, intervalMs); 
+      }
+    };
+
+    await runReport();
+    return;
+  }
+
   // ─── FTP/SFTP FILE TRANSMISSION ENGINE ──────────────────────────────────────────
   if (command === "file-move") {
     const runtimeConfig = readRuntimeConfig();
