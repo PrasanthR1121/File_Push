@@ -48,7 +48,6 @@ async function runFileTransfer(runtimeConfig) {
 
             try {
                 // ─── TEMPORARY MOCK TESTING BLOCK ─────────────────────────────────────
-                // Creates a local "mock_remote_destination" folder in your project root
                 const mockRemoteDir = path.resolve(process.cwd(), "mock_remote_destination");
                 if (!fs.existsSync(mockRemoteDir)) {
                     fs.mkdirSync(mockRemoteDir, { recursive: true });
