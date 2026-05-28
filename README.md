@@ -20,16 +20,36 @@ Oracle insert uses `MERGE` on `ACP_MAP_ID`, so duplicate rows are skipped automa
 - dev: `config/config.dev.json`
 - prod: `config/config.prod.json`
 
-Passwords are not stored directly in config.
+> Sensitive credentials and passwords are not stored directly in configuration files.
 
-$env:MYSQL_USER="${MYSQL_USER}" 
+## Environment Variables
+
+### MySQL
+
+```powershell
+$env:MYSQL_USER="${MYSQL_USER}"
 $env:MYSQL_PASSWORD="${MYSQL_PASSWORD}"
+```
 
-$env:ORACLE_USER="${ORACLE_USER}$" 
+### Oracle
+
+```powershell
+$env:ORACLE_USER="${ORACLE_USER}"
 $env:ORACLE_PASSWORD="${ORACLE_PASSWORD}"
 $env:ORACLE_CONNECT_STRING="${ORACLE_CONNECT_STRING}"
+```
 
-$env:REMOTE_PROTOCOL="FTP/SFTP"
+### File Transfer Protocol
+
+```powershell
+$env:REMOTE_PROTOCOL="FTP"
+```
+
+or
+
+```powershell
+$env:REMOTE_PROTOCOL="SFTP"
+```
 
 ## Commands
 
@@ -66,4 +86,16 @@ pm2 start vibsp.config.js
 pm2 save
 ```
 
-The batch size is configured as `cdrSync.batchSize`; currently it is `10000`.
+## Batch Configuration
+
+Configured using:
+
+```json
+cdrSync.batchSize
+```
+
+Current value:
+
+```json
+10000
+```
