@@ -67,7 +67,8 @@ npm run check-connections
 
 ```powershell
 
-Development
+> Development
+
 $env:APP_ENV="dev"
 npx pm2 start src/index.js --name "sync-cdr" -- sync-cdr
 npx pm2 start src/index.js --name "cdr-reconcile" -- cdr-reconcile
@@ -80,7 +81,8 @@ npm start
 
 (Note: npm start automatically defaults to the continuous sync-cdr command).
 
-Production
+> Production
+
 $env:APP_ENV="prod"
 pm2 start vibsp.config.js
 pm2 save
